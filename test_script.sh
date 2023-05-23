@@ -1,31 +1,13 @@
 #!/bin/bash
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-     echo "its linux-gnu"
-      sudo apt install -y mosquitto
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-        # Mac OSX
-        echo "its darwin"
-        HOMEBREW_NO_AUTO_UPDATE=1 brew install mosquitto
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-        # POSIX compatibility layer and Linux environment emulation for Windows
-        echo "its cygwin"
-elif [[ "$OSTYPE" == "msys" ]]; then
-        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-        echo "its msys"
-elif [[ "$OSTYPE" == "win32" ]]; then
-        # I'm not sure this can happen.
-        echo "its win32"
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        # ...
-        echo "its freebsd"
-else
-       echo "unknown"
-fi
+echo "NOTE: THE MOSQUITTO BROKER NEEDS TO BE INSTALLED TO EXECUTE THIS SCRIPT SUCCESSFULLY"
+echo "FOR LINUX INSTALLATION follow this link https://www.vultr.com/docs/install-mosquitto-mqtt-broker-on-ubuntu-20-04-server/"
+echo "FOR MAC INSTALLATION follow this link https://subscription.packtpub.com/book/application-development/9781787287815/1/ch01lvl1sec12/installing-a-mosquitto-broker-on-macos"
 
+read -p "Press enter to continue when mosquitto is successfully installed or if you already have mosquitto"
 
-echo “Test script executing mosquitto command....”
+echo "Test script executing mosquitto command...."
 
-echo $1
+echo "$1"
 
-# mosquitto_pub -h "test.mosquitto.org" -t "sfractal/command" -m $1
+mosquitto_pub -h "test.mosquitto.org" -t "sfractal/command" -m "$1"
