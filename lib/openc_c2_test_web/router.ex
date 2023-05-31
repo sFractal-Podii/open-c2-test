@@ -20,6 +20,12 @@ defmodule OpencC2TestWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/auth", OpencC2TestWeb do
+    pipe_through :browser
+
+    get "/github/callback", AuthController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", OpencC2TestWeb do
   #   pipe_through :api
