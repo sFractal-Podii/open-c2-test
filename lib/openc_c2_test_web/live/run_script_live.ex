@@ -2,10 +2,11 @@ defmodule OpencC2TestWeb.RunScriptLive do
   use Phoenix.LiveView
 
   import OpencC2TestWeb.CoreComponents
+  alias OpencC2Test.TestScript
 
   def mount(_param, _session, socket) do
     # after calling the changeset call to_form
-    {:ok, assign(socket, form: to_form(%{}, as: :inputs))}
+    {:ok, assign(socket, form: to_form(TestScript.change_script(%TestScript{})))}
   end
 
   def render(assigns) do
@@ -21,7 +22,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
       <.input
         type="select"
-        field={@form[:device]}
+        field={@form[:broker]}
         options={[mosquito_test_broker: "mosquito"]}
         prompt="Select broker"
         label="Which broker do you want to use?"
@@ -29,7 +30,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
       <.input
         type="select"
-        field={@form[:device]}
+        field={@form[:command]}
         options={[
           Turn_led_on: "turn_led_on",
           Turn_led_off: "turn_led_off",
@@ -39,24 +40,28 @@ defmodule OpencC2TestWeb.RunScriptLive do
         prompt="Select command"
         label="What command do you want to send?"
       />
-      <button>Run</button>
+      <.button>Run</.button>
     </.form>
     """
   end
 
-  def handle_event("validate", %{"inputs" => params}, socket) do
+  def handle_event("validate", %{"test_script" => params}, socket) do
     IO.inspect(params, label: "++++++++++++++++++++++++++")
-    #    form =
-    #   %User{}
-    #   |> Accounts.change_user(params)
-    #   |> Map.put(:action, :insert)
-    #   |> to_form()
 
-    # {:noreply, assign(socket, form: form)}
-    {:noreply, socket}
+    form =
+      %TestScript{}
+      |> TestScript.change_script(params)
+      |> to_form()
+
+    {:noreply, assign(socket, form: form)}
   end
 
-  def handle_event("save", %{"user" => params}, socket) do
+  def handle_event("save", %{"test_script" => params}, socket) do
+    System.cmd("echo", [
+      "hello"
+    ])
+    |> IO.inspect(label: "++++++++++++++++++++")
+
     # case Accounts.create_user(user_params) do
     #   {:ok, user} ->
     #     {:noreply,
