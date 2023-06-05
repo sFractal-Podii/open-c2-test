@@ -19,7 +19,12 @@ defmodule OpencC2Test.MixProject do
   def application do
     [
       mod: {OpencC2Test.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :ueberauth_github,
+        :ueberauth
+      ]
     ]
   end
 
@@ -49,7 +54,10 @@ defmodule OpencC2Test.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:oauth2, "~> 2.0", override: true},
+      {:ueberauth, "~> 0.7.0"},
+      {:ueberauth_github, "~> 0.8.1"}
     ]
   end
 

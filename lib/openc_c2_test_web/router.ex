@@ -23,7 +23,8 @@ defmodule OpencC2TestWeb.Router do
   scope "/auth", OpencC2TestWeb do
     pipe_through :browser
 
-    get "/github/callback", AuthController, :index
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
