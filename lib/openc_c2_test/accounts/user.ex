@@ -12,7 +12,7 @@ defmodule OpencC2Test.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email])
+    |> cast(attrs, [:email, :provider])
     |> validate_required([:email])
     |> unique_constraint(:email)
   end

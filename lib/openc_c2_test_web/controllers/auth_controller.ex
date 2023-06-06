@@ -6,8 +6,7 @@ defmodule OpencC2TestWeb.AuthController do
 
   plug Ueberauth
 
-  alias OpencC2Test.Accounts.User
-  alias OpencC2Test.Repo
+  alias OpencC2Test.UserFromAuth
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
@@ -16,29 +15,22 @@ defmodule OpencC2TestWeb.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    user_data = %{token: auth.credentials.token, email: auth.info.email, provider: "github"}
-    case find_or_create_user(user_data) do
+    find_or_create_user(conn, auth)
+  end
+
+  defp find_or_create_user(conn, auth) do
+    case UserFromAuth.find_or_create_user(auth) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Successfully authenticated")
+        |> put_flash(:info, "Successfully authenticated.")
         |> put_session(:user_id, user.id)
-        |> put_view(OpencC2TestWeb.PageHTML)
-        |> render(:welcome, email: auth.info.email)
+        |> configure_session(renew: true)
+        |> redirect(to: "/run_script")
 
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong")
         |> redirect(to: "/")
-    end
-  end
-
-  defp find_or_create_user(user_data) do
-    changeset = User.changeset(%User{}, user_data)
-    case Repo.get_by(User, email: changeset.changes.email) do
-      nil ->
-        IO.puts("User not found, creating new")
-        Repo.insert(changeset)
-      user -> {:ok, user}
     end
   end
 end

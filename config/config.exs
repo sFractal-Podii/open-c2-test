@@ -61,9 +61,9 @@ config :phoenix, :json_library, Jason
 
 # Github authentication configuration
 config :ueberauth, Ueberauth,
-      providers: [
-        github: {Ueberauth.Strategy.Github, [default_scope: "user:email"]}
-      ]
+  providers: [
+    github: {Ueberauth.Strategy.Github, [default_scope: "user:email"]}
+  ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: "",
