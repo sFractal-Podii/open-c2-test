@@ -18,6 +18,7 @@ defmodule OpencC2TestWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/run_script", RunScriptLive
   end
 
   scope "/auth", OpencC2TestWeb do
