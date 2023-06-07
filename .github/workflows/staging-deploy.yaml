@@ -68,6 +68,6 @@ jobs:
       id: deploy
       uses: google-github-actions/deploy-cloudrun@v0
       with:
-        service: openc2-test-staging
+        service: openc-c2-test
         region: us-east4
         image: "gcr.io/duncan-openc2-plugfest/openc2-test:staging"
