@@ -24,7 +24,7 @@ COPY priv ./priv
 
 RUN mix release
 
-FROM debian:buster-slim AS app
+FROM debian:bullseye-slim AS app
 
 RUN apt-get update && apt-get install -y openssl
 
