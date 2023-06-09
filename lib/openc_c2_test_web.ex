@@ -21,7 +21,7 @@ defmodule OpencC2TestWeb do
 
   def router do
     quote do
-      use Phoenix.Router, helpers: false
+      use Phoenix.Router
 
       # Import common connection and controller functions to use in pipelines
       import Plug.Conn
@@ -44,6 +44,7 @@ defmodule OpencC2TestWeb do
 
       import Plug.Conn
       import OpencC2TestWeb.Gettext
+      alias OpencC2TestWeb.Router.Helpers, as: Routes
 
       unquote(verified_routes())
     end
@@ -89,6 +90,7 @@ defmodule OpencC2TestWeb do
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
+      alias OpencC2TestWeb.Router.Helpers, as: Routes
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

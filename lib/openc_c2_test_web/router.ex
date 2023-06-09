@@ -21,6 +21,13 @@ defmodule OpencC2TestWeb.Router do
     live "/run_script", RunScriptLive
   end
 
+  scope "/auth", OpencC2TestWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", OpencC2TestWeb do
   #   pipe_through :api

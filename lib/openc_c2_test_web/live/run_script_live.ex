@@ -55,24 +55,29 @@ defmodule OpencC2TestWeb.RunScriptLive do
   end
 
   def handle_event("save", %{"test_script" => params}, socket) do
-   command = Path.expand("./test_script.sh")
-    color  = case params["command"] do
-                "turn_led_on" -> "on"
-                "turn_led_off" -> "off"
-             end
-   action = cond do
-              params["command"] in ["turn_led_on","turn_led_off"] -> "set"
-              true -> "query"
-            end 
+    command = Path.expand("./test_script.sh")
 
-   args = '{"action": "#{action}", "target": {"x-sfractal-blinky:led": "#{color}"}, "args": {"response_requested": "complete"}}'
-     |> Jason.decode!
-     |> Jason.encode!
+    color =
+      case params["command"] do
+        "turn_led_on" -> "on"
+        "turn_led_off" -> "off"
+      end
+
+    action =
+      cond do
+        params["command"] in ["turn_led_on", "turn_led_off"] -> "set"
+        true -> "query"
+      end
+
+    args =
+      '{"action": "#{action}", "target": {"x-sfractal-blinky:led": "#{color}"}, "args": {"response_requested": "complete"}}'
+      |> Jason.decode!()
+      |> Jason.encode!()
 
     System.cmd(command, [
       args
     ])
-    
+
     {:noreply, socket}
   end
 end
