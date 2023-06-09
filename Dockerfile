@@ -22,6 +22,7 @@ COPY config ./config
 COPY lib ./lib
 COPY priv ./priv
 
+RUN mix assets.deploy
 RUN mix release
 
 FROM debian:bullseye-slim AS app
