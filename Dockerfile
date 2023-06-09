@@ -2,7 +2,7 @@
 FROM elixir:1.14-otp-25 AS app_builder
 
 ARG env=prod
-ENV DATABASE_URL=ecto://postgres:i9y0mnfjeECkGJar@35.230.191.149/quadquiz_prod
+
 
 ENV LANG=C.UTF-8 \
    TERM=xterm \
