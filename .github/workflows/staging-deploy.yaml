@@ -57,7 +57,7 @@ jobs:
     - name: Build
       run: |
         rm config/runtime.exs
-        echo '${{ secrets.RELEASES_SECRETS }}' >> config/runtime.exs
+        echo '${{ secrets.RELEASES_SECRETS }}' >> config/releases.exs
         docker build --tag "gcr.io/duncan-openc2-plugfest/openc2-test:staging" .
 
     # Push the Docker image to Google Container Registry
