@@ -55,7 +55,6 @@ defmodule OpencC2TestWeb.RunScriptLive do
   end
 
   def handle_event("save", %{"test_script" => params}, socket) do
-    command = Path.expand("./test_script.sh")
 
     color =
       case params["command"] do
@@ -69,12 +68,13 @@ defmodule OpencC2TestWeb.RunScriptLive do
         true -> "query"
       end
 
-    args =
-      '{"action": "#{action}", "target": {"x-sfractal-blinky:led": "#{color}"}, "args": {"response_requested": "complete"}}'
-      |> Jason.decode!()
-      |> Jason.encode!()
+    message = Jason.encode!(%{
+      "action" => action,
+      "args" => %{"response_requested" => "complete"},
+      "target" => %{"x-sfractal-blinky:led" => color}
+    })
 
-    System.cmd(command, [ args ])
+    System.cmd "mosquitto_pub", ["-h", "test.mosquitto.org", "-t", "sfractal/command", "-m", message]
 
     {:noreply, socket}
   end
