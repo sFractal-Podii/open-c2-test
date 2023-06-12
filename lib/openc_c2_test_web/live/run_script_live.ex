@@ -74,9 +74,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
       |> Jason.decode!()
       |> Jason.encode!()
 
-    System.cmd(command, [
-      args
-    ])
+    System.cmd(command, [ args ])
 
     {:noreply, socket}
   end

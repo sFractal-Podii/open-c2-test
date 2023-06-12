@@ -27,7 +27,8 @@ RUN mix release
 
 FROM debian:bullseye-slim AS app
 
-RUN apt-get update && apt-get install -y openssl
+ENV LANG=C.UTF-8
+RUN apt-get update && apt-get install -y openssl mosquitto mosquitto-clients
 
 RUN useradd --create-home app
 WORKDIR /home/app
