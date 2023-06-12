@@ -42,7 +42,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
           label="What command do you want to send?"
         />
         <div class="mt-2">
-          <.button type="button" class="bg-indigo-500  w-full">Run</.button>
+          <.button type="submit" class="bg-indigo-500  w-full">Run</.button>
         </div>
       </.form>
     </div>
