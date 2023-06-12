@@ -11,37 +11,41 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
   def render(assigns) do
     ~H"""
-    <.form for={@form} phx-change="validate" phx-submit="save">
-      <.input
-        type="select"
-        field={@form[:device]}
-        options={[TwinklyMaha: "twinklymaha"]}
-        prompt="Select project"
-        label="Which device are you testing?"
-      />
+    <div class="container mx-auto">
+      <.form class="mt-6 w-1/2 mx-auto" for={@form} phx-change="validate" phx-submit="save">
+        <.input
+          type="select"
+          field={@form[:device]}
+          options={[TwinklyMaha: "twinklymaha"]}
+          prompt="Select project"
+          label="Which device are you testing?"
+        />
 
-      <.input
-        type="select"
-        field={@form[:broker]}
-        options={[mosquito_test_broker: "mosquito"]}
-        prompt="Select broker"
-        label="Which broker do you want to use?"
-      />
+        <.input
+          type="select"
+          field={@form[:broker]}
+          options={[mosquito_test_broker: "mosquito"]}
+          prompt="Select broker"
+          label="Which broker do you want to use?"
+        />
 
-      <.input
-        type="select"
-        field={@form[:command]}
-        options={[
-          Turn_led_on: "turn_led_on",
-          Turn_led_off: "turn_led_off",
-          Query_profile: "query_profile",
-          Query_sbom: "query_sbom"
-        ]}
-        prompt="Select command"
-        label="What command do you want to send?"
-      />
-      <.button>Run</.button>
-    </.form>
+        <.input
+          type="select"
+          field={@form[:command]}
+          options={[
+            Turn_led_on: "turn_led_on",
+            Turn_led_off: "turn_led_off",
+            Query_profile: "query_profile",
+            Query_sbom: "query_sbom"
+          ]}
+          prompt="Select command"
+          label="What command do you want to send?"
+        />
+        <div class="mt-2">
+          <.button type="button" class="bg-indigo-500  w-full">Run</.button>
+        </div>
+      </.form>
+    </div>
     """
   end
 
@@ -55,7 +59,6 @@ defmodule OpencC2TestWeb.RunScriptLive do
   end
 
   def handle_event("save", %{"test_script" => params}, socket) do
-
     color =
       case params["command"] do
         "turn_led_on" -> "on"
@@ -68,13 +71,21 @@ defmodule OpencC2TestWeb.RunScriptLive do
         true -> "query"
       end
 
-    message = Jason.encode!(%{
-      "action" => action,
-      "args" => %{"response_requested" => "complete"},
-      "target" => %{"x-sfractal-blinky:led" => color}
-    })
+    message =
+      Jason.encode!(%{
+        "action" => action,
+        "args" => %{"response_requested" => "complete"},
+        "target" => %{"x-sfractal-blinky:led" => color}
+      })
 
-    System.cmd "mosquitto_pub", ["-h", "test.mosquitto.org", "-t", "sfractal/command", "-m", message]
+    System.cmd("mosquitto_pub", [
+      "-h",
+      "test.mosquitto.org",
+      "-t",
+      "sfractal/command",
+      "-m",
+      message
+    ])
 
     {:noreply, socket}
   end
