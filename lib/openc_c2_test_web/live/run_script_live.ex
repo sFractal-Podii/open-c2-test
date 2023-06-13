@@ -4,6 +4,8 @@ defmodule OpencC2TestWeb.RunScriptLive do
   import OpencC2TestWeb.CoreComponents
   alias OpencC2Test.TestScript
 
+  require Logger
+
   def mount(_param, _session, socket) do
     # after calling the changeset call to_form
     {:ok, assign(socket, form: to_form(TestScript.change_script(%TestScript{})))}
@@ -59,11 +61,13 @@ defmodule OpencC2TestWeb.RunScriptLive do
   end
 
   def handle_event("save", %{"test_script" => params}, socket) do
+    Logger.info("Button Clicked")
     color =
       case params["command"] do
         "turn_led_on" -> "on"
         "turn_led_off" -> "off"
       end
+      Logger.info("Button Color is #{color}")
 
     action =
       cond do
@@ -77,6 +81,8 @@ defmodule OpencC2TestWeb.RunScriptLive do
         "args" => %{"response_requested" => "complete"},
         "target" => %{"led" => color}
       })
+
+    Logger.info("button message is #{message}")
 
     System.cmd("mosquitto_pub", [
       "-h",
