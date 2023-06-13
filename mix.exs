@@ -4,7 +4,7 @@ defmodule OpencC2Test.MixProject do
   def project do
     [
       app: :openc_c2_test,
-      version: "0.1.3",
+      version: "0.1.4",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
