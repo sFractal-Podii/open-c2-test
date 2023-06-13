@@ -88,7 +88,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
       "-h",
       "test.mosquitto.org",
       "-t",
-      "oc2/cmd/device/sf_tw_01",
+      "oc2/cmd/device/t01",
       "-m",
       message
     ])
