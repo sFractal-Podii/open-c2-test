@@ -86,7 +86,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
     System.cmd("mosquitto_pub", [
       "-h",
-      "b-faad036d-e951-4aae-bf64-a171b0a16629-1.mq.us-east-1.amazonaws.com",
+      "test.mosquitto.org",
       "-t",
       "oc2/cmd/device/t01",
       "-m",
