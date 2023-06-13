@@ -75,7 +75,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
       Jason.encode!(%{
         "action" => action,
         "args" => %{"response_requested" => "complete"},
-        "target" => %{"x-sfractal-blinky:led" => color}
+        "target" => %{"led" => color}
       })
 
     System.cmd("mosquitto_pub", [
