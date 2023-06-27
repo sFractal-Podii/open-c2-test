@@ -4,7 +4,7 @@ defmodule OpencC2Test.MixProject do
   def project do
     [
       app: :openc_c2_test,
-      version: "0.1.6",
+      version: "0.2.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -57,7 +57,12 @@ defmodule OpencC2Test.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:oauth2, "~> 2.0", override: true},
       {:ueberauth, "~> 0.7.0"},
-      {:ueberauth_github, "~> 0.8.1"}
+      {:ueberauth_github, "~> 0.8.1"},
+      {:sbom,
+       git: "https://github.com/sigu/sbom.git",
+       only: :dev,
+       branch: "auto-install-bom",
+       runtime: false},
     ]
   end
 
