@@ -4,16 +4,18 @@ defmodule OpencC2TestWeb.SbomLive do
 
 
     def render(assigns) do
-    assigns = sbom_files(assigns)
+     assigns = sbom_files(assigns)
+
         ~H"""
         <p>SBOMs for this site are available in several formats and serializations.</p>
-        <%= for {k, v} <- @sbom_files do %>
-            <ol><%= k %></ol>
-            <%= for file <- v do %>
-                <li><%= link(file, to: ["sbom/", file]) %></li>
-            <% end %>
-        <% end %>
+        
         """
+        # <%= for {k, v} <- @sbom_files do %>
+        #     <ol><%= k %></ol>
+        #     <%= for file <- v do %>
+        #         <li><%= link(file, to: ["sbom/", file]) %></li>
+        #     <% end %>
+        # <% end %>
     end
 
     defp sbom_files(assigns) do
