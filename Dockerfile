@@ -22,6 +22,18 @@ COPY config ./config
 COPY lib ./lib
 COPY priv ./priv
 
+RUN mix sbom.install
+RUN mix sbom.cyclonedx
+RUN mix sbom.convert
+
+# make sbom for the production docker image
+RUN syft debian:bullseye-slim -o spdx > debian.buster_slim-spdx-bom.spdx
+RUN syft debian:bullseye-slim -o spdx-json > debian.buster_slim-spdx-bom.json
+RUN syft debian:bullseye-slim -o cyclonedx-json > debian.buster_slim-cyclonedx-bom.json
+RUN syft debian:bullseye-slim -o cyclonedx > debian.buster_slim-cyclonedx-bom.xml
+
+RUN cp *bom* ./priv/static/.well-known/sbom/
+
 RUN mix assets.deploy
 RUN mix release
 
