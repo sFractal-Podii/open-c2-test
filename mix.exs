@@ -60,7 +60,7 @@ defmodule OpencC2Test.MixProject do
       {:ueberauth_github, "~> 0.8.1"},
       {:sbom,
        git: "https://github.com/sigu/sbom.git",
-       only: :dev,
+      #  only: :dev,
        branch: "auto-install-bom",
        runtime: false},
     ]
