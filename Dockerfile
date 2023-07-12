@@ -13,6 +13,8 @@ WORKDIR /opt/release
 
 RUN mix local.hex --force && mix local.rebar --force
 
+RUN curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
 COPY mix.exs .
 COPY mix.lock .
 RUN mix deps.get && mix deps.compile
