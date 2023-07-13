@@ -17,7 +17,7 @@ defmodule OpencC2TestWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt .well-known)
 
   def router do
     quote do
@@ -83,7 +83,8 @@ defmodule OpencC2TestWeb do
   defp html_helpers do
     quote do
       # HTML escaping functionality
-      import Phoenix.HTML
+      # import Phoenix.HTML
+      use Phoenix.HTML
       # Core UI components and translation
       import OpencC2TestWeb.CoreComponents
       import OpencC2TestWeb.Gettext
