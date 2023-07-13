@@ -11,7 +11,7 @@ defmodule OpencC2TestWeb.SbomLive do
           <%= for {k, v} <- @sbom_files do %>
               <ol><%= k %></ol>
               <%= for file <- v do %>
-                  <li><%= link(file, to: ["sbom/", file]) %></li>
+                  <li><%= link(file, to: ["sbom/", file], class: "text-sky-500") %></li>
               <% end %>
           <% end %>
         """
