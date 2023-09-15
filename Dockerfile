@@ -1,5 +1,5 @@
 # heavily borrowed from https://elixirforum.com/t/cannot-find-libtinfo-so-6-when-launching-elixir-app/24101/11?u=sigu
-FROM elixir:1.15.4-otp-26 AS app_builder
+FROM elixir:1.15.4-otp-25 AS app_builder
 
 ARG env=prod
 
