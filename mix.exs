@@ -58,11 +58,15 @@ defmodule OpencC2Test.MixProject do
       {:oauth2, "~> 2.0", override: true},
       {:ueberauth, "~> 0.10.5"},
       {:ueberauth_github, "~> 0.8.1"},
-      {:sbom,
-       git: "https://github.com/sigu/sbom.git",
-      #  only: :dev,
-       branch: "auto-install-bom",
-       runtime: false},
+      {
+        :sbom,
+        #  only: :dev,
+        git: "https://github.com/sigu/sbom.git", branch: "auto-install-bom", runtime: false
+      },
+      {:ranch, ">= 0.0.0", manager: :rebar3, override: true},
+      {:emqtt, github: "emqx/emqtt", tag: "1.4.4", system_env: [{"BUILD_WITHOUT_QUIC", "1"}]},
+      {:cowlib, "~> 2.11.0", override: true},
+      {:gun, "~> 1.3.0", override: true}
     ]
   end
 
