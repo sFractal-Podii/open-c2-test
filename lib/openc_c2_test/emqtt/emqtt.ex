@@ -87,6 +87,7 @@ defmodule Emqtt do
   end
 
   def publish(message) do
+    Logger.info("publish #{message}")
     GenServer.cast(__MODULE__, {:publish, message})
   end
 end

@@ -26,7 +26,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
         <.input
           type="select"
           field={@form[:broker]}
-          options={[mosquito_test_broker: "mosquito"]}
+          options={[emqx_broker: "emqx"]}
           prompt="Select broker"
           label="Which broker do you want to use?"
         />
@@ -62,12 +62,14 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
   def handle_event("save", %{"test_script" => params}, socket) do
     Logger.info("Button Clicked")
+
     color =
       case params["command"] do
         "turn_led_on" -> "on"
         "turn_led_off" -> "off"
       end
-      Logger.info("Button Color is #{color}")
+
+    Logger.info("Button Color is #{color}")
 
     action =
       cond do
@@ -84,14 +86,7 @@ defmodule OpencC2TestWeb.RunScriptLive do
 
     Logger.info("button message is #{message}")
 
-    System.cmd("mosquitto_pub", [
-      "-h",
-      "test.mosquitto.org",
-      "-t",
-      "oc2/cmd/device/t01",
-      "-m",
-      message
-    ])
+    Emqtt.publish(message)
 
     {:noreply, socket}
   end
