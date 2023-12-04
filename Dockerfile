@@ -1,5 +1,5 @@
 # heavily borrowed from https://elixirforum.com/t/cannot-find-libtinfo-so-6-when-launching-elixir-app/24101/11?u=sigu
-FROM elixir:1.15.4-otp-25 AS app_builder
+FROM hexpm/elixir:1.15.4-erlang-25.2.3-debian-bullseye-20230612 AS app_builder
 
 ARG env=prod
 
@@ -41,8 +41,22 @@ RUN mix release
 
 FROM debian:bullseye-slim AS app
 
+ARG CLIENT_ID=openc2test2023
+ARG MQTT_HOST="broker.emqx.io"
+ARG MQTT_PORT=1883
+ARG USER_NAME=plug
+ARG PASSWORD=fest
+
+
 ENV LANG=C.UTF-8
-RUN apt-get update && apt-get install -y openssl mosquitto mosquitto-clients
+ENV CLIENT_ID=$CLIENT_ID
+ENV MQTT_HOST=$MQTT_HOST
+ENV MQTT_PORT=$MQTT_PORT
+ENV USER_NAME=$USER_NAME
+ENV PASSWORD=$PASSWORD
+
+ENV LANG=C.UTF-8
+
 
 RUN useradd --create-home app
 WORKDIR /home/app
