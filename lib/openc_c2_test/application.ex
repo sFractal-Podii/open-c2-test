@@ -17,9 +17,11 @@ defmodule OpencC2Test.Application do
       # Start Finch
       {Finch, name: OpencC2Test.Finch},
       # Start the Endpoint (http/https)
-      OpencC2TestWeb.Endpoint
+      OpencC2TestWeb.Endpoint,
       # Start a worker by calling: OpencC2Test.Worker.start_link(arg)
       # {OpencC2Test.Worker, arg}
+      # start emqtt connection
+      Emqtt
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
