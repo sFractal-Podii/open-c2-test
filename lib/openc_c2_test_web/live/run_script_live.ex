@@ -63,31 +63,38 @@ defmodule OpencC2TestWeb.RunScriptLive do
   def handle_event("save", %{"test_script" => params}, socket) do
     Logger.info("Button Clicked")
 
+    publish_message(params)
+
+    Logger.info("message is published")
+
+    {:noreply, socket}
+  end
+
+  defp publish_message(%{"command" => "query_profile"}) do
+    %{
+      "action" => "query",
+      "target" => %{"features" => ["profiles"]},
+      "args" => %{"response_requested" => "complete"},
+      "command_id" => "randomcommandid"
+    }
+    |> Jason.encode!()
+    |> Emqtt.publish()
+  end
+
+  defp publish_message(%{"command" => command})
+       when command == "turn_led_on" or command == "turn_led_off" do
     color =
-      case params["command"] do
+      case command do
         "turn_led_on" -> "on"
         "turn_led_off" -> "off"
       end
 
-    Logger.info("Button Color is #{color}")
-
-    action =
-      cond do
-        params["command"] in ["turn_led_on", "turn_led_off"] -> "set"
-        true -> "query"
-      end
-
-    message =
-      Jason.encode!(%{
-        "action" => action,
-        "args" => %{"response_requested" => "complete"},
-        "target" => %{"led" => color}
-      })
-
-    Logger.info("button message is #{message}")
-
-    Emqtt.publish(message)
-
-    {:noreply, socket}
+    %{
+      "action" => "set",
+      "args" => %{"response_requested" => "complete"},
+      "target" => %{"led" => color}
+    }
+    |> Jason.encode!()
+    |> Emqtt.publish()
   end
 end
