@@ -97,4 +97,8 @@ defmodule OpencC2TestWeb.RunScriptLive do
     |> Jason.encode!()
     |> Emqtt.publish()
   end
+
+  defp publish_message(params) do
+    Logger.info("commands not matching")
+  end
 end
